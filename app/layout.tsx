@@ -28,8 +28,11 @@ export const metadata: Metadata = {
   title: "Najima - Mehndi Artist",
   description: "Official portfolio of Najima - Professional Mehndi Artist specializing in traditional and contemporary designs.",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/logo.png?v=2", type: "image/png" },
+    ],
+    shortcut: ["/logo.png?v=2"],
+    apple: ["/logo.png?v=2"],
   }
 };
 
