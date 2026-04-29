@@ -1,0 +1,293 @@
+/* ── Section ───────────────────────── */
+.section {
+  padding: clamp(4rem, 8vw, 7rem) 6%;
+  background: var(--bg-offwhite);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Label ─────────────────────────── */
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.labelLine {
+  flex: 1;
+  max-width: 60px;
+  height: 1.5px;
+  background: var(--accent-color);
+  display: block;
+}
+.labelText {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 2.5rem;
+  line-height: 1.1;
+}
+
+/* ══════════════════════════════════════
+   FEATURED HERO STRIP
+══════════════════════════════════════ */
+.featuredCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2.4rem 3rem;
+  background: var(--text-primary);
+  border-radius: 18px;
+  margin-bottom: 1.4rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.featuredCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px rgba(45, 35, 29, 0.25);
+}
+.featuredCard:hover .featuredArrow {
+  transform: translateX(6px) translateY(-6px);
+}
+
+/* Ghost big number in background */
+.featuredGhost {
+  position: absolute;
+  right: 5%;
+  bottom: -20%;
+  font-family: var(--font-serif);
+  font-size: 12rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.featuredLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+}
+
+.featuredTag {
+  display: inline-flex;
+  align-self: flex-start;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background: rgba(176, 125, 98, 0.18);
+  border: 1px solid rgba(176, 125, 98, 0.35);
+  padding: 5px 14px;
+  border-radius: 100px;
+}
+
+.featuredIconRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.featuredIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(176, 125, 98, 0.18);
+  border: 1px solid rgba(176, 125, 98, 0.4);
+  color: var(--accent-color);
+  flex-shrink: 0;
+}
+
+.featuredTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.featuredDesc {
+  font-family: var(--font-sans);
+  font-size: clamp(0.88rem, 1.3vw, 1rem);
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+.featuredRight {
+  flex-shrink: 0;
+}
+
+.featuredArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  transition: transform 0.3s ease;
+}
+
+/* ══════════════════════════════════════
+   2-ROW CARD GRID  (5 columns)
+══════════════════════════════════════ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+/* ── Single Card ───────────────────── */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 2vw, 0.9rem);
+  padding: clamp(1rem, 3vw, 1.8rem) clamp(1rem, 3vw, 1.5rem) 1.5rem;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1.5px solid var(--divider-color);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.card:hover {
+  border-color: var(--accent-color);
+  background: rgba(176, 125, 98, 0.06);
+  box-shadow: 0 14px 32px rgba(176, 125, 98, 0.12);
+}
+
+/* Accent top line — expands on hover */
+.accentLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 2.5px;
+  background: var(--accent-color);
+  border-radius: 0 0 4px 0;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card:hover .accentLine {
+  width: 100%;
+}
+
+/* Ghost number in background */
+.ghostNum {
+  position: absolute;
+  bottom: -12px;
+  right: 6px;
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: rgba(45, 35, 29, 0.05);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+.card:hover .ghostNum {
+  color: rgba(176, 125, 98, 0.1);
+}
+
+/* Icon */
+.cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(176, 125, 98, 0.09);
+  border: 1px solid rgba(176, 125, 98, 0.18);
+  color: var(--accent-color);
+  flex-shrink: 0;
+  transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.card:hover .cardIcon {
+  background: rgba(176, 125, 98, 0.18);
+  border-color: rgba(176, 125, 98, 0.4);
+  transform: scale(1.08);
+}
+
+/* Title */
+.cardTitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.82rem, 1.1vw, 0.96rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+/* Arrow */
+.cardArrow {
+  font-size: 1rem;
+  color: var(--divider-color);
+  transition: color 0.3s ease, transform 0.3s ease;
+  margin-top: auto;
+  display: block;
+}
+.card:hover .cardArrow {
+  color: var(--accent-color);
+  transform: translate(3px, -3px);
+}
+
+/* ── Responsive ────────────────────── */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .featuredCard { padding: 2rem; }
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+  .featuredTitle { font-size: 1.4rem; }
+  .featuredDesc { display: none; }
+}
+
+@media (max-width: 520px) {
+  .grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 0.75rem;
+  }
+  .grid > *:first-child {
+    grid-column: span 2;
+  }
+  .featuredCard { padding: 1.6rem; flex-direction: column; align-items: flex-start; }
+  .featuredRight { display: none; }
+  .section { padding: 3rem 5%; }
+}
+
+@media (max-width: 420px) {
+  .card { padding: 1rem; gap: 0.5rem; }
+  .cardIcon { width: 42px; height: 42px; }
+  .cardIcon svg { width: 22px; height: 22px; }
+  .cardTitle { font-size: 0.8rem; }
+  .ghostNum { font-size: 3rem; bottom: -8px; }
+  .cardArrow { font-size: 0.85rem; }
+}

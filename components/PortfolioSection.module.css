@@ -1,0 +1,190 @@
+.portfolioContainer {
+  padding: 9rem 0;
+  background: var(--bg-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% -20%, rgba(21, 23, 29, 0.03), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  padding: 0 6%;
+  position: relative;
+  z-index: 1;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--accent-color);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  max-width: 38rem;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(45, 35, 29, 0.72);
+}
+
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 620px;
+  perspective: 2500px;
+  width: 100%;
+  transform-style: preserve-3d;
+}
+
+.card {
+  position: absolute;
+  width: min(22rem, 65%);
+  aspect-ratio: 9/16;
+  border-radius: 2.5rem;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  background: #f8f8f8;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .stage {
+    height: 450px;
+  }
+  .card {
+    width: min(14rem, 55%);
+  }
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.prevBtn { left: 5%; }
+.nextBtn { right: 5%; }
+
+.navBtn:hover {
+  background: #1a1a1a;
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.navBtn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeDot {
+  width: 24px;
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .portfolioContainer {
+    padding: 4rem 0;
+  }
+
+  .stage {
+    height: 520px;
+    perspective: 1500px;
+  }
+
+  .card {
+    width: min(18rem, 75%);
+    border-radius: 1.8rem;
+  }
+
+  .navBtn {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .prevBtn { left: 0.5rem; }
+  .nextBtn { right: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mainCard {
+    transition: none;
+  }
+}

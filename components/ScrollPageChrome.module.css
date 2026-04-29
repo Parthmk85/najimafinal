@@ -1,0 +1,130 @@
+.singleLineDock {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  z-index: 1200;
+  transform: translateY(-50%);
+  height: 40vh;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trackLine {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: rgba(176, 125, 98, 0.25);
+  border-radius: 2px;
+}
+
+.movingDot {
+  position: absolute;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  border: 3px solid var(--bg-color);
+  box-shadow: 0 0 10px rgba(45, 35, 29, 0.2);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  will-change: top;
+}
+
+.clickOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+}
+
+.hiddenClickArea {
+  flex: 1;
+  width: 100%;
+  cursor: pointer;
+}
+
+.hiddenClickArea:hover {
+  background: rgba(176, 125, 98, 0.05);
+}
+
+.scrollBadge {
+  position: fixed;
+  left: 1.4rem;
+  bottom: 1.35rem;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(176, 125, 98, 0.18);
+  border-radius: 22px;
+  background: rgba(45, 35, 29, 0.9);
+  color: #f5efe6;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.progressValue {
+  display: grid;
+  place-items: center;
+  min-width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.badgeLabel {
+  margin: 0 0 0.2rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 230, 0.68);
+}
+
+.badgeSection {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 920px) {
+  .sectionDock {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .scrollBadge {
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.9rem;
+    justify-content: space-between;
+    padding: 0.7rem 0.9rem;
+    border-radius: 16px;
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .badgeLabel {
+    display: none;
+  }
+  .progressValue {
+    min-width: 2.8rem;
+    height: 2.8rem;
+    font-size: 0.85rem;
+  }
+  .badgeSection {
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,206 @@
+.section {
+  padding: 6rem 6%;
+  background-color: var(--bg-color);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.labelLine {
+  display: block;
+  width: 40px;
+  height: 1.5px;
+  background: var(--accent-color);
+}
+
+.labelText {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 1rem;
+  background: rgba(45, 35, 29, 0.05);
+  border-radius: 100px;
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.statusText {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.layoutWrapper {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  min-height: 900px;
+  position: relative;
+  transition: all 0.8s ease;
+  contain: layout;
+  will-change: transform, grid-template-columns;
+}
+
+/* Base Styles for Image Box */
+.imageBox {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+}
+
+.imageInner {
+  position: absolute;
+  inset: 0;
+}
+
+.img {
+  object-position: center 20%;
+  transition: transform 0.8s ease;
+}
+
+.imageBox:hover .img {
+  transform: scale(1.05);
+}
+
+/* ── GRID STATES ────────────────────── */
+
+/* State 1: 3x4 Grid (12 equal small images) */
+.layoutWrapper[data-grid="1"] {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 220px);
+}
+
+/* State 2: 4x3 Grid (Horizontal layout with 12 images) */
+.layoutWrapper[data-grid="2"] {
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 250px);
+}
+
+/* State 3: 2x6 Pairs (Wider grid with 12 images) */
+.layoutWrapper[data-grid="3"] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 240px);
+}
+
+/* State 4: Mosaic with one large and others smaller */
+.layoutWrapper[data-grid="4"] {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 200px);
+}
+.layoutWrapper[data-grid="4"] .imageBox:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* State 5: Variable sizes - dynamic masonry effect */
+.layoutWrapper[data-grid="5"] {
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+}
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+  height: 470px;
+}
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(2) {
+  height: 220px;
+}
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(3) {
+  height: 220px;
+}
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(4) {
+  grid-column: span 2;
+  height: 220px;
+}
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(5),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(6),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(7),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(8),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(9),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(10),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(11),
+.layoutWrapper[data-grid="5"] .imageBox:nth-child(12) {
+  height: 220px;
+}
+
+
+@media (max-width: 1024px) {
+  .layoutWrapper {
+    min-height: auto;
+  }
+  
+  .layoutWrapper[data-grid="1"],
+  .layoutWrapper[data-grid="2"],
+  .layoutWrapper[data-grid="3"],
+  .layoutWrapper[data-grid="4"],
+  .layoutWrapper[data-grid="5"] {
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: auto !important;
+  }
+  
+  .layoutWrapper[data-grid="4"] .imageBox:nth-child(1),
+  .layoutWrapper[data-grid="5"] .imageBox:nth-child(1),
+  .layoutWrapper[data-grid="5"] .imageBox:nth-child(4) {
+    grid-column: span 2 !important;
+    grid-row: span 1 !important;
+  }
+  
+  .imageBox {
+    height: 200px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .layoutWrapper {
+    grid-template-columns: 1fr !important;
+  }
+  .imageBox {
+    height: 250px !important;
+  }
+  .layoutWrapper[data-grid="4"] .imageBox:nth-child(1),
+  .layoutWrapper[data-grid="5"] .imageBox:nth-child(1),
+  .layoutWrapper[data-grid="5"] .imageBox:nth-child(4) {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+}

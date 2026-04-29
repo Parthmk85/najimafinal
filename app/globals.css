@@ -1,0 +1,1179 @@
+:root {
+  --bg-color: #ffffff;
+  --bg-offwhite: #f8f9fa;
+  --text-primary: #15171d;
+  --text-secondary: #4b5563;
+  --accent-color: #374151;
+  --divider-color: #e5e7eb;
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --header-height: 70px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  background-color: var(--bg-color);
+  /* Hide scrollbar but allow scrolling */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+html::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+  opacity: 0.6;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--text-primary);
+}
+
+body {
+  background-color: #f7f7f7; /* Subtle contrast for the central column */
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+.mehndi-page-root {
+  position: relative;
+  isolation: isolate;
+  background-color: #f7f7f7;
+  padding: 4rem 2rem; /* Vertical and horizontal padding for the floating effect */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mehndi-page-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.08);
+  min-height: calc(100vh - 8rem);
+  border-radius: 5rem;
+  overflow: clip;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.mehndi-page-graffiti {
+  position: fixed; /* Back to fixed background */
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("/portfolio/seamless-mehndi-pattern.png") repeat center / 400px auto;
+  opacity: 0.22;
+}
+
+.admin-mehndi-bg {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.admin-mehndi-bg::before,
+.admin-mehndi-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("/assets/mehndi-graffiti.svg");
+  background-size: 300px auto;
+  background-repeat: repeat-y;
+}
+
+.admin-mehndi-bg::before {
+  background-position: left -92px top 24px;
+  opacity: 0.22;
+}
+
+.admin-mehndi-bg::after {
+  background-position: right -92px top 176px;
+  opacity: 0.17;
+}
+
+.admin-mehndi-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+  .admin-mehndi-bg::before,
+  .admin-mehndi-bg::after {
+    background-size: 228px auto;
+  }
+
+  .admin-mehndi-bg::before {
+    background-position: left -86px top 72px;
+    opacity: 0.16;
+  }
+
+  .admin-mehndi-bg::after {
+    background-position: right -86px top 220px;
+    opacity: 0.12;
+  }
+
+body.splash-active {
+  overflow: hidden;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0) scale(0.985);
+  filter: blur(6px);
+  transition:
+    opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.82s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity, filter;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* Typography Fluid Scaling */
+h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 9vw, 6.5rem);
+  line-height: 1.05;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.01em;
+}
+
+/* Helper Classes */
+.logo-cursive {
+  font-style: italic;
+  font-weight: 300;
+  opacity: 0.7;
+  margin: 0 0.2rem;
+}
+
+.section-padding {
+  padding: clamp(6rem, 12vw, 10rem) 6%;
+}
+
+/* ════════════════════════════════════════════════════
+   HERO V2 — Cinematic Split-Screen
+════════════════════════════════════════════════════ */
+.hero-v2 {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--bg-color);
+  align-items: stretch;
+}
+
+/* ── LEFT PANEL ─────────────────────── */
+.hero-left {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: calc(var(--header-height) + 1.5rem) clamp(2rem, 4.5vw, 4.5rem) clamp(2.6rem, 5vw, 4.2rem) clamp(2.2rem, 5.2vw, 5rem);
+  gap: 1.7rem;
+}
+
+/* Label */
+.hero-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.label-line {
+  display: block;
+  width: 42px;
+  height: 1.5px;
+  background: var(--accent-color);
+  flex-shrink: 0;
+}
+.label-text {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+}
+
+/* Heading */
+.hero-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 11vw, 6.1rem);
+  line-height: 0.95;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.heading-thin {
+  font-weight: 400;
+  font-style: italic;
+  opacity: 0.72;
+}
+.heading-bold {
+  font-weight: 700;
+  display: block;
+}
+
+/* Paragraph */
+.hero-para {
+  font-family: var(--font-sans);
+  font-size: clamp(0.93rem, 1.25vw, 1.05rem);
+  color: var(--text-secondary);
+  line-height: 1.72;
+  max-width: 480px;
+}
+
+/* Stats */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 2vw, 1.5rem);
+  padding: 1rem;
+  border: 1px solid var(--divider-color);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.35);
+  width: 100%;
+  justify-content: space-around;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.stat-label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--divider-color);
+  flex-shrink: 0;
+}
+
+/* CTA Buttons */
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.95rem 2.2rem;
+  background: var(--text-primary);
+  color: var(--bg-color);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid var(--text-primary);
+  border-radius: 100px; /* Modern Pill Shape */
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.btn-primary:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.btn-primary svg {
+  transition: transform 0.4s ease;
+}
+
+.btn-primary:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(176, 125, 98, 0.2);
+}
+
+.btn-primary:hover svg {
+  transform: translateX(6px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.9rem 1.9rem;
+  border: 1.5px solid var(--divider-color);
+  border-radius: 100px; /* Consistent Pill Shape */
+  transition: all 0.4s ease;
+}
+
+.btn-outline:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  background: rgba(176, 125, 98, 0.05);
+  transform: translateY(-3px);
+}
+
+/* Social Icons */
+.hero-socials-v2 {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.social-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--divider-color);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.social-v2:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transform: translateY(-4px);
+  background: rgba(176, 125, 98, 0.08);
+}
+
+/* ── RIGHT PANEL ────────────────────── */
+.hero-right {
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+}
+
+/* Main Background Image */
+.hero-img-wrap {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.layer-main {
+  z-index: 10;
+  filter: contrast(1.03) brightness(1.01) saturate(0.98);
+}
+
+/* Floating Accent Frames */
+.hero-img-accent {
+  position: absolute;
+  overflow: hidden;
+  border: 6px solid rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(45, 35, 29, 0.2);
+  transition: transform 0.3s ease;
+  z-index: 20;
+}
+
+.frame-1 {
+  width: 150px;
+  aspect-ratio: 4/5;
+  top: 18%;
+  left: -30px;
+  transform: rotate(-2deg);
+  filter: contrast(1.05);
+}
+
+.frame-2 {
+  display: none;
+}
+
+.hero-img-accent:hover {
+  transform: scale(1.05) rotate(0deg);
+  z-index: 30;
+}
+
+/* Gradient Masks */
+.img-fade-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28%;
+  height: 100%;
+  background: linear-gradient(to right, var(--bg-color) 0%, transparent 100%);
+  z-index: 12;
+  pointer-events: none;
+}
+
+.img-fade-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 34%;
+  background: linear-gradient(to top, var(--bg-color) 0%, transparent 100%);
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* ── RESPONSIVE ─────────────────────── */
+@media (max-width: 1024px) {
+  .hero-v2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: 100vh;
+  }
+  .hero-left {
+    order: 2;
+    padding: 2.4rem 5% 4rem 5%;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-right {
+    order: 1;
+    height: 85vw;
+    max-height: 580px;
+    min-height: 420px;
+  }
+  .frame-1 { width: 120px; left: 4%; top: 8%; transform: rotate(0deg); }
+  .img-fade-left { display: none; }
+  .img-fade-bottom {
+    height: 60%;
+    background: linear-gradient(to top, var(--bg-color) 15%, transparent 100%);
+    z-index: 15;
+  }
+  .avail-card { top: auto; bottom: 8%; left: 50%; transform: translateX(-50%); }
+  .floating-badge { display: none; }
+}
+
+@media (max-width: 600px) {
+  .hero-heading { font-size: clamp(2.4rem, 14vw, 4.4rem); }
+  .hero-stats { 
+    gap: 0.5rem; 
+    padding: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat-num { font-size: 1.5rem; }
+  .stat-label { font-size: 0.6rem; }
+  .btn-primary { padding: 0.9rem 1.4rem; width: 100%; justify-content: center; font-size: 0.8rem; }
+  .btn-outline { padding: 0.9rem 1.4rem; width: 100%; justify-content: center; font-size: 0.8rem; }
+  .hero-cta-row { flex-direction: column; align-items: stretch; width: 100%; max-width: none; gap: 0.8rem; }
+  .section-padding { padding: 4rem 5%; }
+}
+
+/* ════════════════════════════════════════════════════
+   NAJIMA HERO — Reference Inspired Layout
+════════════════════════════════════════════════════ */
+.najima-hero {
+  position: relative;
+  min-height: 100vh;
+  padding: var(--header-height) 0 4rem; /* Adjusted padding to respect the navbar space */
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.najima-hero-card {
+  position: relative;
+  width: 100%; /* Now fills the constrained parent */
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: transparent; /* Seamless with the new page column */
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  isolation: isolate;
+}
+
+.najima-hero-card::before {
+  display: none;
+}
+
+.najima-hero-card::after {
+  display: none;
+}
+
+/* Patterns moved to card */
+
+/* Removed redundant shell patterns in favor of full background */
+
+.najima-hero-shell {
+  position: relative;
+  z-index: 2;
+  max-width: 1060px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.najima-hero-brand {
+  margin: 0;
+  font-family: var(--font-display), var(--font-serif), serif;
+  font-size: clamp(0.62rem, 0.9vw, 0.82rem);
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: #3e4551;
+}
+
+.najima-hero-heading-wrap {
+  margin-top: 0.5rem; /* Give it some space from the navbar */
+  position: relative;
+  z-index: 10; /* Above the image stage */
+}
+
+.najima-title-script {
+  display: block;
+  font-family: var(--font-serif), serif;
+  font-size: clamp(6.5rem, 18vw, 13rem); /* Even larger for impact */
+  font-weight: 700;
+  font-style: italic;
+  color: #444444;
+  margin-bottom: -1.5rem;
+  letter-spacing: -0.04em;
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
+}
+
+.najima-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: -1rem;
+}
+
+.najima-hero-logo {
+  flex-shrink: 0;
+  margin-top: 1.5rem;
+}
+
+.najima-hero-logo-img {
+  width: clamp(60px, 12vw, 110px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+}
+
+.najima-title-main {
+  margin: 0 !important;
+  font-family: var(--font-serif), serif;
+  font-size: clamp(2.5rem, 8vw, 6.5rem) !important;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.38em;
+  line-height: 0.85;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  cursor: default;
+}
+
+.najima-title-main:hover {
+  transform: translateY(-8px) scale(1.02);
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.25));
+}
+
+.najima-word-mehndi {
+  display: block;
+  color: #000000 !important;
+  padding-bottom: 0.2rem;
+  /* Enhanced shadow for readability on any background */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.najima-word-artist {
+  display: block;
+  color: #ffffff !important;
+  /* Strong multi-layered shadow for pop and readability on the dark image */
+  text-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.6), 
+    0 4px 15px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.42em;
+}
+
+.najima-hero-handle {
+  margin-top: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(0.72rem, 1.2vw, 0.88rem);
+  font-weight: 700;
+  color: #5c677d;
+  opacity: 0.85;
+}
+
+.najima-hero-tagline {
+  margin-top: 0.5rem;
+  font-family: var(--font-serif), serif;
+  font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+  font-style: italic;
+  color: #4a4a4a;
+  letter-spacing: 0.02em;
+}
+
+.najima-media-stage {
+  margin-top: 1.5rem; /* Moved completely below the text to avoid overlap */
+  width: min(100%, 900px);
+  position: relative;
+  z-index: 5;
+  padding-bottom: 3.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.najima-stage-flourish {
+  position: absolute;
+  top: -15%; /* Move slightly above the center image as requested */
+  height: 120%; /* Match and slightly exceed the image height for impact */
+  width: auto;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.28;
+  filter: grayscale(0.1);
+}
+
+.flourish-left {
+  left: -240px; /* Spread far apart "dur dur" */
+  rotate: -12deg;
+}
+
+.flourish-right {
+  right: -240px; /* Spread far apart "dur dur" */
+  rotate: 168deg;
+}
+
+/* ── CORNER FLOURISHES ─────────────────────────── */
+.najima-corner-flourish {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.25;
+  filter: grayscale(1);
+}
+
+.corner-top-right {
+  top: -60px;
+  right: -60px;
+  rotate: -15deg;
+}
+
+.corner-top-left {
+  top: -60px;
+  left: -60px;
+  rotate: -105deg;
+  transform: scaleX(-1);
+}
+
+.najima-main-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 3.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+  background: #f0f0f0;
+}
+
+.najima-main-photo {
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.92) contrast(1.05);
+}
+
+.najima-booking-card {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 0;
+  transform: translateY(35%);
+  width: min(92vw, 380px);
+  background: #ffffff;
+  border-radius: 2.2rem;
+  border: none;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+  padding: 1.8rem 2rem 1.6rem;
+  text-align: left;
+  z-index: 10;
+}
+
+.najima-booking-title {
+  margin: 0 0 1.2rem;
+  text-align: center;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: #1a1a1a;
+}
+
+.najima-booking-grid {
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 1.2rem 0;
+  gap: 1rem;
+}
+
+.najima-booking-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.82rem;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.najima-booking-item svg {
+  width: 18px;
+  height: 18px;
+  color: #1a1a1a;
+}
+
+.najima-booking-item + .najima-booking-item {
+  border-left: 1px solid #f0f0f0;
+  padding-left: 1.2rem;
+}
+
+.najima-booking-cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.4rem;
+  text-decoration: none;
+  font-family: var(--font-sans), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #fff;
+  background: #000000;
+  border-radius: 999px;
+  padding: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.najima-booking-cta:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Side Labels Removed */
+@media (max-width: 900px) {
+  .mehndi-page-root,
+  .mehndi-page-content,
+  .najima-hero,
+  .najima-hero-card,
+  .najima-hero-shell {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    left: 0 !important;
+    position: relative !important;
+  }
+
+  .mehndi-page-root {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .mehndi-page-content {
+    min-height: 100vh !important;
+  }
+
+  .mehndi-page-graffiti {
+    background:
+      url("/assets/mehndi-graffiti-page.svg") left -86px top -28px / 280px auto repeat-y,
+      url("/assets/mehndi-graffiti-page.svg") right -86px top 130px / 280px auto repeat-y;
+    opacity: 0.22;
+  }
+
+  .najima-hero {
+    min-height: 100vh;
+    padding-top: calc(var(--header-height) + 1rem);
+    padding-bottom: 2rem;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: center !important;
+  }
+
+  .najima-title-script {
+    font-size: clamp(4.8rem, 22vw, 6.8rem);
+    margin-bottom: -1rem;
+    width: 100%;
+  }
+
+  .najima-title-main {
+    font-size: clamp(1.6rem, 11vw, 2.8rem) !important;
+    letter-spacing: 0.18em;
+    padding-left: 0.16em;
+    width: 100%;
+  }
+
+  .najima-hero-tagline {
+    display: none !important; /* Remove tagline as requested */
+  }
+
+  .najima-word-mehndi {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    color: #000000 !important;
+  }
+
+  .najima-word-artist {
+    color: #ffffff !important;
+    transform: translateY(2.2rem); /* Overlap ARTIST onto the image */
+    position: relative;
+    z-index: 10;
+  }
+
+  .najima-media-stage {
+    position: relative !important;
+    width: 100% !important;
+    margin: -1.8rem auto 0 !important; /* Pulled up further to be closer to MEHNDI */
+    padding-bottom: 0 !important;
+    z-index: 5 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+
+  .najima-main-image {
+    border-radius: 2.5rem !important;
+    aspect-ratio: 1 / 1.15 !important;
+    width: 100% !important; /* Full width for mobile */
+    overflow: hidden;
+    position: relative !important;
+  }
+
+  .najima-booking-card {
+    display: block !important;
+    position: relative !important;
+    width: min(85vw, 310px) !important;
+    margin: -3.5rem auto 2rem !important; /* Negative margin to overlap image */
+    padding: 1.2rem !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 1.8rem !important;
+    background: #ffffff !important;
+    z-index: 20 !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+
+  .najima-booking-title {
+    display: block !important;
+    font-size: 0.52rem !important;
+    margin-bottom: 0.8rem !important;
+    text-align: center !important;
+    letter-spacing: 0.15em !important;
+  }
+
+  .najima-booking-grid {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 0.8rem !important;
+    border-top: 1px solid #f0f0f0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    padding: 0.8rem 0 !important;
+  }
+
+  .najima-booking-item {
+    font-size: 0.72rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .najima-booking-item svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .najima-booking-cta {
+    padding: 0.85rem !important;
+    margin-top: 1rem !important;
+    font-size: 0.62rem !important;
+    border-radius: 0.8rem !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .najima-hero {
+    padding-inline: 0 !important; /* Zero side padding for true edge-to-edge look */
+  }
+
+  .najima-title-script {
+    font-size: clamp(4.5rem, 20vw, 6.5rem);
+  }
+
+  .najima-title-main {
+    font-size: clamp(1.5rem, 12vw, 2.8rem) !important;
+  }
+}
+
+
+
+/* Navbar Logo Fixes (Global Part) */
+.logo-circle {
+  background-color: var(--accent-color);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* ── LIVE FLOATING BUTTON ────────────────────── */
+.live-floating-btn {
+  position: absolute;
+  top: calc(var(--header-height) + 0.8rem);
+  left: 42%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(45, 35, 29, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 0.6rem 1.4rem;
+  border-radius: 100px;
+  color: white;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s ease;
+  max-width: 90vw;
+  width: max-content;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid #22c55e;
+  animation: live-pulse 2s infinite ease-out;
+}
+
+@keyframes live-pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.live-floating-btn:hover {
+  background: var(--text-primary);
+  border-color: var(--accent-color);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.live-floating-btn svg {
+  opacity: 0.6;
+  transition: transform 0.3s ease;
+}
+
+.live-floating-btn:hover svg {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .live-floating-btn {
+    top: auto;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    width: fit-content;
+    white-space: nowrap;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.65rem;
+  }
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: #0f0a08; /* Ultra-dark for maximum contrast */
+}
+
+.splash-screen__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.splash-screen__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1;
+  color: #ffffff; /* Bright white */
+}
+
+.splash-screen__title span {
+  background: transparent !important; /* Ensure no blending backgrounds */
+}
+
+.splash-screen__title span:last-child {
+  font-style: italic;
+  color: var(--accent-color);
+  filter: brightness(1.4); /* Make accent color pop more on dark bg */
+}
+
+.scroll-timeline {
+  position: relative;
+  padding: clamp(2rem, 4vw, 4rem) 0 2rem;
+}
+
+.scroll-timeline__progress {
+  display: none;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 2rem 0;
+}
+
+.timeline-item__node {
+  display: none;
+}
+
+.timeline-item__label {
+  display: none;
+}
+
+.timeline-item__panel {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .timeline-item {
+    padding-left: 4.2rem;
+  }
+}
