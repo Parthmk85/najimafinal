@@ -4,9 +4,9 @@ import path from 'path';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   // Since we migrated to local storage, we first check if the file exists in public/uploads
   const uploadDir = path.join(process.cwd(), 'public', 'uploads');
