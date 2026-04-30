@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 interface Log {
   id: number;
   date: string;
+  time: string;
   type: string;
   message: string;
 }
@@ -111,7 +112,7 @@ const SystemLogs = () => {
                   padding: '0.5rem 0',
                   borderBottom: '1px solid #f5f5f5'
                 }}>
-                  <span style={{ color: '#aaa', minWidth: '80px' }}>{log.date}</span>
+                  <span style={{ color: '#aaa', minWidth: '150px' }}>{log.date} {log.time}</span>
                   <span style={{ 
                     background: '#f0f0f0', 
                     padding: '0.1rem 0.4rem', 
