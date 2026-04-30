@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Log {
   id: number;
@@ -33,101 +33,91 @@ const SystemLogs = () => {
   return (
     <div style={{ 
       margin: '4rem auto', 
-      maxWidth: '1200px', 
+      maxWidth: '1000px', 
       padding: '0 20px',
-      fontFamily: "'Inter', sans-serif"
+      fontFamily: "'Fira Code', 'Courier New', monospace"
     }}>
+      {/* Terminal Header Toggle */}
       <div 
         onClick={() => setIsOpen(!isOpen)}
         style={{ 
-          background: '#000', 
-          color: '#fff', 
-          padding: '1rem 2rem', 
+          background: '#2d2d2d', 
+          padding: '10px 20px', 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
           cursor: 'pointer',
-          borderRadius: '4px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+          borderRadius: isOpen ? '8px 8px 0 0' : '8px',
+          border: '1px solid #444',
+          userSelect: 'none'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ 
-            width: '10px', 
-            height: '10px', 
-            borderRadius: '50%', 
-            background: data.database.connection === 'Connected' ? '#4ade80' : '#f87171' 
-          }} />
-          <span style={{ fontWeight: 800, fontSize: '0.7rem', letterSpacing: '0.1em' }}>SYSTEM DEVELOPMENT LOGS</span>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f56' }} />
+          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }} />
+          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }} />
+          <span style={{ marginLeft: '10px', color: '#aaa', fontSize: '12px', fontWeight: 600 }}>najimafinal ~ system-logs</span>
         </div>
-        <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>{isOpen ? '[ CLOSE ]' : '[ VIEW UPDATES ]'}</span>
+        <div style={{ color: '#00ff00', fontSize: '12px' }}>
+          {isOpen ? '-- MINIMIZE' : '-- EXPAND'}
+        </div>
       </div>
 
-      {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{ 
-            background: '#fff', 
-            border: '1px solid #000', 
-            borderTop: 'none',
-            padding: '2rem',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem'
-          }}
-        >
-          {/* Status Panel */}
-          <div>
-            <h4 style={{ margin: '0 0 1rem', fontSize: '0.65rem', fontWeight: 900, color: '#888', letterSpacing: '0.1em' }}>ENVIRONMENT</h4>
-            <div style={{ display: 'grid', gap: '0.8rem', fontSize: '0.85rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#666' }}>Database:</span>
-                <span style={{ fontWeight: 700 }}>{data.database.name}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#666' }}>Connection:</span>
-                <span style={{ fontWeight: 700, color: '#4ade80' }}>{data.database.connection}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#666' }}>Storage:</span>
-                <span style={{ fontWeight: 700 }}>{data.storage.type}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#666' }}>Asset Sync:</span>
-                <span style={{ fontWeight: 700 }}>{data.storage.sync}</span>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            style={{ 
+              background: '#1e1e1e', 
+              border: '1px solid #444', 
+              borderTop: 'none',
+              padding: '20px',
+              borderRadius: '0 0 8px 8px',
+              overflow: 'hidden',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
+            }}
+          >
+            {/* Environment Stats */}
+            <div style={{ marginBottom: '20px', padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px' }}>
+              <div style={{ color: '#569cd6', fontSize: '13px', marginBottom: '8px' }}>// System Environment Status</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', fontSize: '12px' }}>
+                <div style={{ color: '#dcdcdc' }}>DB_CONN: <span style={{ color: '#4ade80' }}>{data.database.connection.toUpperCase()}</span></div>
+                <div style={{ color: '#dcdcdc' }}>DB_NAME: <span style={{ color: '#ce9178' }}>"{data.database.name}"</span></div>
+                <div style={{ color: '#dcdcdc' }}>STORAGE: <span style={{ color: '#ce9178' }}>"{data.storage.type}"</span></div>
+                <div style={{ color: '#dcdcdc' }}>SYNC: <span style={{ color: '#4ade80' }}>ACTIVE</span></div>
               </div>
             </div>
-          </div>
 
-          {/* Activity Log */}
-          <div style={{ gridColumn: 'span 2' }}>
-            <h4 style={{ margin: '0 0 1rem', fontSize: '0.65rem', fontWeight: 900, color: '#888', letterSpacing: '0.1em' }}>RECENT ACTIVITY</h4>
-            <div style={{ display: 'grid', gap: '0.5rem' }}>
-              {data.recentLogs.map(log => (
-                <div key={log.id} style={{ 
-                  display: 'flex', 
-                  gap: '1rem', 
-                  fontSize: '0.8rem', 
-                  padding: '0.5rem 0',
-                  borderBottom: '1px solid #f5f5f5'
-                }}>
-                  <span style={{ color: '#aaa', minWidth: '150px' }}>{log.date} {log.time}</span>
+            {/* Logs Content */}
+            <div style={{ color: '#dcdcdc', fontSize: '13px', lineHeight: '1.6' }}>
+              <div style={{ color: '#888', marginBottom: '10px' }}>[Initializing log stream...]</div>
+              {data.recentLogs.map((log, index) => (
+                <div key={log.id} style={{ marginBottom: '6px', display: 'flex', gap: '12px' }}>
+                  <span style={{ color: '#888' }}>[{log.date} {log.time}]</span>
                   <span style={{ 
-                    background: '#f0f0f0', 
-                    padding: '0.1rem 0.4rem', 
-                    fontSize: '0.6rem', 
-                    fontWeight: 900,
-                    borderRadius: '2px',
-                    height: 'fit-content'
-                  }}>{log.type}</span>
-                  <span style={{ color: '#333' }}>{log.message}</span>
+                    color: log.type === 'Backend' ? '#569cd6' : 
+                           log.type === 'Database' ? '#4ade80' : 
+                           log.type === 'Storage' ? '#ce9178' : '#b5cea8',
+                    minWidth: '70px',
+                    fontWeight: 700
+                  }}>{log.type.toUpperCase()}</span>
+                  <span style={{ color: '#eee' }}>{log.message}</span>
                 </div>
               ))}
+              <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: '#00ff00' }}>$</span>
+                <motion.div 
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ repeat: Infinity, duration: 0.8 }}
+                  style={{ width: '8px', height: '15px', background: '#00ff00' }} 
+                />
+              </div>
             </div>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
