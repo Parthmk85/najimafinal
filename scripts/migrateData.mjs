@@ -1,70 +1,35 @@
 import mongoose from 'mongoose';
 
-// Connection Strings
-const SOURCE_URI = "mongodb://najimamam:najimamam@ac-bpevkot-shard-00-00.eik30i6.mongodb.net:27017,ac-bpevkot-shard-00-01.eik30i6.mongodb.net:27017,ac-bpevkot-shard-00-02.eik30i6.mongodb.net:27017/test?ssl=true&replicaSet=atlas-g0kmd3-shard-0&authSource=admin&retryWrites=true&w=majority&appName=najimamam";
-const DEST_URI = "mongodb+srv://Vercel-Admin-najima-mehandi-artist:najimamam@najima-mehandi-artist.cta9wzj.mongodb.net/?appName=najima-mehandi-artist";
+const SOURCE_URI = "mongodb+srv://Vercel-Admin-najima-mehandi-artist:najimamam@najima-mehandi-artist.cta9wzj.mongodb.net/?appName=najima-mehandi-artist";
+const TARGET_URI = "mongodb+srv://najima2209:najima2209@najima-mehandi.yxrd19t.mongodb.net/?retryWrites=true&w=majority&appName=najima-mehandi";
 
-const collections = [
-  'admins',
-  'courses',
-  'educations',
-  'feedbacks',
-  'gears',
-  'globalsettings',
-  'projects',
-  'services',
-  'skills',
-  'videos'
-];
+const collections = ['admins', 'projects', 'educations', 'gears', 'feedbacks', 'skills', 'courses', 'globalsettings', 'videos'];
 
 async function migrate() {
-  console.log('--- Starting Migration ---');
-
+  console.log('--- Starting Data Migration to Newest Cluster ---');
+  
   try {
-    // 1. Connect to Source
-    console.log('Connecting to SOURCE database...');
     const sourceConn = await mongoose.createConnection(SOURCE_URI).asPromise();
-    console.log('Connected to Source.');
+    const targetConn = await mongoose.createConnection(TARGET_URI).asPromise();
 
-    const dataMap = {};
+    console.log('Connected to both databases.');
 
-    // 2. Fetch Data
     for (const colName of collections) {
-      try {
-        console.log(`Fetching data from ${colName}...`);
-        const data = await sourceConn.db.collection(colName).find({}).toArray();
-        dataMap[colName] = data;
-        console.log(`Found ${data.length} documents in ${colName}.`);
-      } catch (err) {
-        console.warn(`Could not fetch from ${colName}: ${err.message}`);
+      console.log(`Migrating collection: ${colName}`);
+      const data = await sourceConn.db.collection(colName).find({}).toArray();
+      
+      if (data.length > 0) {
+        // Clear target collection first to avoid duplicates if re-running
+        await targetConn.db.collection(colName).deleteMany({});
+        await targetConn.db.collection(colName).insertMany(data);
+        console.log(`Successfully moved ${data.length} documents for ${colName}`);
+      } else {
+        console.log(`Collection ${colName} is empty. Skipping.`);
       }
     }
 
     await sourceConn.close();
-    console.log('Source connection closed.');
-
-    // 3. Connect to Destination
-    console.log('\nConnecting to DESTINATION database...');
-    const destConn = await mongoose.createConnection(DEST_URI).asPromise();
-    console.log('Connected to Destination.');
-
-    // 4. Insert Data
-    for (const colName of collections) {
-      const data = dataMap[colName];
-      if (data && data.length > 0) {
-        console.log(`Migrating ${data.length} documents to ${colName}...`);
-        
-        // Clear destination collection first to avoid duplicates
-        await destConn.db.collection(colName).deleteMany({});
-        
-        await destConn.db.collection(colName).insertMany(data);
-        console.log(`Successfully migrated ${colName}.`);
-      } else {
-        console.log(`No data found for ${colName}, skipping.`);
-      }
-    }
-
-    await destConn.close();
+    await targetConn.close();
     console.log('\n--- Migration Completed Successfully! ---');
   } catch (err) {
     console.error('Migration failed:', err);
