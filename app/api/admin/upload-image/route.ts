@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { verifyToken } from '@/lib/auth';
-import { saveMediaFile } from '@/lib/mediaStore';
+import { saveFileLocally } from '@/lib/fileStore';
 
 export const runtime = 'nodejs';
 
@@ -47,18 +47,11 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const ext = getExtension(file);
     const fileName = `about-${Date.now()}-${randomUUID().slice(0, 8)}${ext}`;
-    const mediaId = await saveMediaFile({
-      buffer,
-      filename: fileName,
-      contentType: file.type || 'application/octet-stream',
-      metadata: {
-        originalName: file.name,
-        size: file.size,
-        scope: 'settings-image',
-      },
-    });
+    
+    // Save locally instead of GridFS
+    const url = await saveFileLocally(buffer, fileName);
 
-    return NextResponse.json({ url: `/api/upload/${mediaId}`, id: mediaId });
+    return NextResponse.json({ url, id: fileName });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json({ error: `Upload failed: ${message}` }, { status: 500 });

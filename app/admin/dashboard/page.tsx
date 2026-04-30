@@ -287,15 +287,15 @@ export default function AdminDashboard() {
               
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
                 {tab === "projects" && <>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Title</label><input style={inputStyle} value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Category</label><input style={inputStyle} value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Link</label><input style={inputStyle} value={formData.link} onChange={e => setFormData({ ...formData, link: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Likes</label><input style={inputStyle} value={formData.stats.likes} onChange={e => setFormData({ ...formData, stats: { ...formData.stats, likes: e.target.value } })} /></div>
-                  <div><label style={labelStyle}>Views</label><input style={inputStyle} value={formData.stats.views} onChange={e => setFormData({ ...formData, stats: { ...formData.stats, views: e.target.value } })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Title</label><input style={inputStyle} value={formData.title || ""} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Category</label><input style={inputStyle} value={formData.category || ""} onChange={e => setFormData({ ...formData, category: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Link</label><input style={inputStyle} value={formData.link || ""} onChange={e => setFormData({ ...formData, link: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Likes</label><input style={inputStyle} value={formData.stats?.likes || ""} onChange={e => setFormData({ ...formData, stats: { ...formData.stats, likes: e.target.value } })} /></div>
+                  <div><label style={labelStyle}>Views</label><input style={inputStyle} value={formData.stats?.views || ""} onChange={e => setFormData({ ...formData, stats: { ...formData.stats, views: e.target.value } })} /></div>
                   <div style={{ gridColumn: "1 / -1" }}>
                     <label style={labelStyle}>Image URL</label>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <input style={inputStyle} value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} />
+                      <input style={inputStyle} value={formData.image || ""} onChange={e => setFormData({ ...formData, image: e.target.value })} />
                       <label style={{ padding: "0 1.5rem", background: "#f0f0f0", display: "flex", alignItems: "center", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem" }}>
                         UPLOAD <input type="file" hidden onChange={e => handleFileUpload(e, 'image')} />
                       </label>
@@ -312,7 +312,7 @@ export default function AdminDashboard() {
                   <div style={{ gridColumn: "1 / -1" }}>
                     <label style={labelStyle}>Avatar URL</label>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <input style={inputStyle} value={formData.avatar} onChange={e => setFormData({ ...formData, avatar: e.target.value })} />
+                      <input style={inputStyle} value={formData.avatar || ""} onChange={e => setFormData({ ...formData, avatar: e.target.value })} />
                       <label style={{ padding: "0 1.5rem", background: "#f0f0f0", display: "flex", alignItems: "center", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem" }}>
                         UPLOAD <input type="file" hidden onChange={e => handleFileUpload(e, 'avatar')} />
                       </label>
@@ -321,11 +321,11 @@ export default function AdminDashboard() {
                 </>}
 
                 {tab === "skills" && <>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Skill Title</label><input style={inputStyle} value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Skill Title</label><input style={inputStyle} value={formData.title || ""} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
                   <div style={{ gridColumn: "1 / -1" }}>
                     <label style={labelStyle}>Icon URL</label>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <input style={inputStyle} value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} />
+                      <input style={inputStyle} value={formData.image || ""} onChange={e => setFormData({ ...formData, image: e.target.value })} />
                       <label style={{ padding: "0 1.5rem", background: "#f0f0f0", display: "flex", alignItems: "center", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem" }}>
                         UPLOAD <input type="file" hidden onChange={e => handleFileUpload(e, 'image')} />
                       </label>
@@ -334,27 +334,27 @@ export default function AdminDashboard() {
                 </>}
 
                 {tab === "education" && <>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Degree / Major</label><input style={inputStyle} value={formData.degree} onChange={e => setFormData({ ...formData, degree: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Year</label><input style={inputStyle} value={formData.year} onChange={e => setFormData({ ...formData, year: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Status Text</label><input style={inputStyle} value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Degree / Major</label><input style={inputStyle} value={formData.degree || ""} onChange={e => setFormData({ ...formData, degree: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Year</label><input style={inputStyle} value={formData.year || ""} onChange={e => setFormData({ ...formData, year: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Status Text</label><input style={inputStyle} value={formData.status || ""} onChange={e => setFormData({ ...formData, status: e.target.value })} /></div>
                   <div>
                     <label style={labelStyle}>Status Type</label>
-                    <select style={inputStyle} value={formData.statusType} onChange={e => setFormData({ ...formData, statusType: e.target.value })}>
+                    <select style={inputStyle} value={formData.statusType || "done"} onChange={e => setFormData({ ...formData, statusType: e.target.value })}>
                       <option value="done">Completed</option>
                       <option value="current">Ongoing</option>
                       <option value="future">Upcoming</option>
                     </select>
                   </div>
-                  <div><label style={labelStyle}>School Name</label><input style={inputStyle} value={formData.schoolName} onChange={e => setFormData({ ...formData, schoolName: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Location</label><input style={inputStyle} value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} /></div>
+                  <div><label style={labelStyle}>School Name</label><input style={inputStyle} value={formData.schoolName || ""} onChange={e => setFormData({ ...formData, schoolName: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Location</label><input style={inputStyle} value={formData.location || ""} onChange={e => setFormData({ ...formData, location: e.target.value })} /></div>
                 </>}
 
                 {tab === "gear" && <>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Package Name</label><input style={inputStyle} value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Subtitle</label><input style={inputStyle} value={formData.subtitle} onChange={e => setFormData({ ...formData, subtitle: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Package Name</label><input style={inputStyle} value={formData.name || ""} onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Subtitle</label><input style={inputStyle} value={formData.subtitle || ""} onChange={e => setFormData({ ...formData, subtitle: e.target.value })} /></div>
                   <div>
                     <label style={labelStyle}>Icon Key</label>
-                    <select style={inputStyle} value={formData.icon} onChange={e => setFormData({ ...formData, icon: e.target.value })}>
+                    <select style={inputStyle} value={formData.icon || "iphone"} onChange={e => setFormData({ ...formData, icon: e.target.value })}>
                       <option value="iphone">iPhone</option>
                       <option value="macbook">MacBook</option>
                       <option value="camera">Camera</option>
@@ -362,16 +362,16 @@ export default function AdminDashboard() {
                       <option value="graduation">Education</option>
                     </select>
                   </div>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Description</label><textarea style={{ ...inputStyle, height: 80 }} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} /></div>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Features (comma separated)</label><input style={inputStyle} value={formData.tags?.join(', ')} onChange={e => setFormData({ ...formData, tags: e.target.value.split(',').map(s => s.trim()) })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Description</label><textarea style={{ ...inputStyle, height: 80 }} value={formData.description || ""} onChange={e => setFormData({ ...formData, description: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Features (comma separated)</label><input style={inputStyle} value={formData.tags?.join(', ') || ""} onChange={e => setFormData({ ...formData, tags: e.target.value.split(',').map(s => s.trim()) })} /></div>
                 </>}
 
                 {tab === "courses" && <>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Course Title</label><input style={inputStyle} value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Course Title</label><input style={inputStyle} value={formData.title || ""} onChange={e => setFormData({ ...formData, title: e.target.value })} /></div>
                   <div style={{ gridColumn: "1 / -1" }}>
                     <label style={labelStyle}>Thumbnail URL</label>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <input style={inputStyle} value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} />
+                      <input style={inputStyle} value={formData.image || ""} onChange={e => setFormData({ ...formData, image: e.target.value })} />
                       <label style={{ padding: "0 1.5rem", background: "#f0f0f0", display: "flex", alignItems: "center", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem" }}>
                         UPLOAD <input type="file" hidden onChange={e => handleFileUpload(e, 'image')} />
                       </label>
@@ -390,41 +390,41 @@ export default function AdminDashboard() {
               <div style={{ background: "#f9f9f9", padding: "3rem", border: "1px solid #eee" }}>
                 <h3 style={{ marginTop: 0, marginBottom: "2rem", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Site Configuration</h3>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Hero Title</label><input style={inputStyle} value={formData.heroTitle} onChange={e => setFormData({ ...formData, heroTitle: e.target.value })} /></div>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Hero SubTitle</label><input style={inputStyle} value={formData.heroSubTitle} onChange={e => setFormData({ ...formData, heroSubTitle: e.target.value })} /></div>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Hero Description</label><textarea style={{ ...inputStyle, height: 100 }} value={formData.heroDescription} onChange={e => setFormData({ ...formData, heroDescription: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Hero Title</label><input style={inputStyle} value={formData.heroTitle || ""} onChange={e => setFormData({ ...formData, heroTitle: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Hero SubTitle</label><input style={inputStyle} value={formData.heroSubTitle || ""} onChange={e => setFormData({ ...formData, heroSubTitle: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Hero Description</label><textarea style={{ ...inputStyle, height: 100 }} value={formData.heroDescription || ""} onChange={e => setFormData({ ...formData, heroDescription: e.target.value })} /></div>
                   
                   <div style={{ gridColumn: "1 / -1" }}>
                     <label style={labelStyle}>Hero Image URL</label>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <input style={inputStyle} value={formData.heroImage} onChange={e => setFormData({ ...formData, heroImage: e.target.value })} />
+                      <input style={inputStyle} value={formData.heroImage || ""} onChange={e => setFormData({ ...formData, heroImage: e.target.value })} />
                       <label style={{ padding: "0 1.5rem", background: "#f0f0f0", display: "flex", alignItems: "center", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem" }}>
                         UPLOAD <input type="file" hidden onChange={e => handleFileUpload(e, 'heroImage')} />
                       </label>
                     </div>
                   </div>
 
-                  <div><label style={labelStyle}>Hero Badge Text</label><input style={inputStyle} value={formData.heroBadgeText} onChange={e => setFormData({ ...formData, heroBadgeText: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Hero Badge Text</label><input style={inputStyle} value={formData.heroBadgeText || ""} onChange={e => setFormData({ ...formData, heroBadgeText: e.target.value })} /></div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <label style={labelStyle}>Show Badge</label>
-                    <input type="checkbox" checked={formData.heroBadgeShow} onChange={e => setFormData({ ...formData, heroBadgeShow: e.target.checked })} />
+                    <input type="checkbox" checked={formData.heroBadgeShow || false} onChange={e => setFormData({ ...formData, heroBadgeShow: e.target.checked })} />
                   </div>
 
-                  <div><label style={labelStyle}>Contact Email</label><input style={inputStyle} value={formData.contactEmail} onChange={e => setFormData({ ...formData, contactEmail: e.target.value })} /></div>
-                  <div><label style={labelStyle}>Contact Phone</label><input style={inputStyle} value={formData.contactPhone} onChange={e => setFormData({ ...formData, contactPhone: e.target.value })} /></div>
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Contact Address</label><input style={inputStyle} value={formData.contactAddress} onChange={e => setFormData({ ...formData, contactAddress: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Contact Email</label><input style={inputStyle} value={formData.contactEmail || ""} onChange={e => setFormData({ ...formData, contactEmail: e.target.value })} /></div>
+                  <div><label style={labelStyle}>Contact Phone</label><input style={inputStyle} value={formData.contactPhone || ""} onChange={e => setFormData({ ...formData, contactPhone: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Contact Address</label><input style={inputStyle} value={formData.contactAddress || ""} onChange={e => setFormData({ ...formData, contactAddress: e.target.value })} /></div>
                   
                   <div style={{ gridColumn: "1 / -1" }}>
                     <label style={labelStyle}>About Image URL</label>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <input style={inputStyle} value={formData.aboutImage} onChange={e => setFormData({ ...formData, aboutImage: e.target.value })} />
+                      <input style={inputStyle} value={formData.aboutImage || ""} onChange={e => setFormData({ ...formData, aboutImage: e.target.value })} />
                       <label style={{ padding: "0 1.5rem", background: "#f0f0f0", display: "flex", alignItems: "center", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem" }}>
                         UPLOAD <input type="file" hidden onChange={e => handleFileUpload(e, 'aboutImage')} />
                       </label>
                     </div>
                   </div>
                   
-                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Languages (comma separated)</label><input style={inputStyle} value={formData.languages} onChange={e => setFormData({ ...formData, languages: e.target.value })} /></div>
+                  <div style={{ gridColumn: "1 / -1" }}><label style={labelStyle}>Languages (comma separated)</label><input style={inputStyle} value={formData.languages || ""} onChange={e => setFormData({ ...formData, languages: e.target.value })} /></div>
 
                   {/* Stats Management */}
                   <div style={{ gridColumn: "1 / -1", marginTop: "2rem" }}>
