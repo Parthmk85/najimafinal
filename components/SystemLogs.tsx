@@ -4,16 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface Log {
   id: number;
-  date: string;
-  time: string;
   type: string;
   message: string;
 }
 
 interface StatusData {
-  status: string;
+  cwd: string;
   database: { name: string; connection: string };
-  storage: { type: string; path: string; sync: string };
   recentLogs: Log[];
 }
 
@@ -33,33 +30,35 @@ const SystemLogs = () => {
   return (
     <div style={{ 
       margin: '4rem auto', 
-      maxWidth: '1000px', 
+      maxWidth: '1100px', 
       padding: '0 20px',
-      fontFamily: "'Fira Code', 'Courier New', monospace"
+      fontFamily: "Consolas, 'Courier New', monospace"
     }}>
-      {/* Terminal Header Toggle */}
+      {/* Windows Command Prompt Header */}
       <div 
         onClick={() => setIsOpen(!isOpen)}
         style={{ 
-          background: '#2d2d2d', 
-          padding: '10px 20px', 
+          background: '#fff', 
+          color: '#000', 
+          padding: '4px 12px', 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
           cursor: 'pointer',
-          borderRadius: isOpen ? '8px 8px 0 0' : '8px',
-          border: '1px solid #444',
+          borderRadius: isOpen ? '4px 4px 0 0' : '4px',
+          border: '1px solid #ccc',
+          fontSize: '12px',
           userSelect: 'none'
         }}
       >
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f56' }} />
-          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }} />
-          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }} />
-          <span style={{ marginLeft: '10px', color: '#aaa', fontSize: '12px', fontWeight: 600 }}>najimafinal ~ system-logs</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <img src="https://www.google.com/s2/favicons?domain=microsoft.com" alt="" style={{ width: '14px' }} />
+          <span>Command Prompt - npm run dev</span>
         </div>
-        <div style={{ color: '#00ff00', fontSize: '12px' }}>
-          {isOpen ? '-- MINIMIZE' : '-- EXPAND'}
+        <div style={{ display: 'flex', gap: '15px', fontSize: '14px' }}>
+          <span>_</span>
+          <span>▢</span>
+          <span style={{ color: '#ff0000' }}>X</span>
         </div>
       </div>
 
@@ -70,50 +69,58 @@ const SystemLogs = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             style={{ 
-              background: '#1e1e1e', 
-              border: '1px solid #444', 
-              borderTop: 'none',
-              padding: '20px',
-              borderRadius: '0 0 8px 8px',
+              background: '#0c0c0c', 
+              color: '#cccccc',
+              padding: '15px',
+              borderRadius: '0 0 4px 4px',
               overflow: 'hidden',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
+              fontSize: '14px',
+              lineHeight: '1.4',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+              border: '1px solid #333',
+              borderTop: 'none'
             }}
           >
-            {/* Environment Stats */}
-            <div style={{ marginBottom: '20px', padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px' }}>
-              <div style={{ color: '#569cd6', fontSize: '13px', marginBottom: '8px' }}>// System Environment Status</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', fontSize: '12px' }}>
-                <div style={{ color: '#dcdcdc' }}>DB_CONN: <span style={{ color: '#4ade80' }}>{data.database.connection.toUpperCase()}</span></div>
-                <div style={{ color: '#dcdcdc' }}>DB_NAME: <span style={{ color: '#ce9178' }}>"{data.database.name}"</span></div>
-                <div style={{ color: '#dcdcdc' }}>STORAGE: <span style={{ color: '#ce9178' }}>"{data.storage.type}"</span></div>
-                <div style={{ color: '#dcdcdc' }}>SYNC: <span style={{ color: '#4ade80' }}>ACTIVE</span></div>
-              </div>
+            {/* Windows OS Header */}
+            <div style={{ color: '#aaa', marginBottom: '15px' }}>
+              Microsoft Windows [Version 10.0.19045.5487]<br />
+              (c) Microsoft Corporation. All rights reserved.
             </div>
 
-            {/* Logs Content */}
-            <div style={{ color: '#dcdcdc', fontSize: '13px', lineHeight: '1.6' }}>
-              <div style={{ color: '#888', marginBottom: '10px' }}>[Initializing log stream...]</div>
-              {data.recentLogs.map((log, index) => (
-                <div key={log.id} style={{ marginBottom: '6px', display: 'flex', gap: '12px' }}>
-                  <span style={{ color: '#888' }}>[{log.date} {log.time}]</span>
-                  <span style={{ 
-                    color: log.type === 'Backend' ? '#569cd6' : 
-                           log.type === 'Database' ? '#4ade80' : 
-                           log.type === 'Storage' ? '#ce9178' : '#b5cea8',
-                    minWidth: '70px',
-                    fontWeight: 700
-                  }}>{log.type.toUpperCase()}</span>
-                  <span style={{ color: '#eee' }}>{log.message}</span>
-                </div>
-              ))}
-              <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#00ff00' }}>$</span>
-                <motion.div 
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.8 }}
-                  style={{ width: '8px', height: '15px', background: '#00ff00' }} 
-                />
-              </div>
+            <div style={{ marginBottom: '15px' }}>
+              {data.cwd}&gt; npm run dev<br />
+              <br />
+              &gt; akash@0.1.0 dev<br />
+              &gt; next dev<br />
+            </div>
+
+            {/* Simulated Next.js Logs */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {data.recentLogs.map((log) => {
+                let color = '#cccccc';
+                if (log.message.includes('▲')) color = '#ffffff';
+                if (log.message.includes('✓')) color = '#4ade80';
+                if (log.message.includes('⨯')) color = '#ff5f56';
+                if (log.message.includes('⚠')) color = '#ffbd2e';
+                if (log.message.includes('○')) color = '#569cd6';
+                if (log.message.includes('[DB]')) color = '#f59e0b';
+
+                return (
+                  <div key={log.id} style={{ color }}>
+                    {log.message}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Blinking Cursor Prompt */}
+            <div style={{ marginTop: '15px', display: 'flex', gap: '4px' }}>
+              <span>{data.cwd}&gt;</span>
+              <motion.div 
+                animate={{ opacity: [1, 0] }}
+                transition={{ repeat: Infinity, duration: 0.8 }}
+                style={{ width: '8px', height: '18px', background: '#ccc' }} 
+              />
             </div>
           </motion.div>
         )}
