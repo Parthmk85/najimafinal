@@ -16,7 +16,6 @@ const MyCourse = dynamic(() => import("@/components/MyCourse"), { ssr: false });
 const Gear = dynamic(() => import("@/components/Gear"), { ssr: false });
 const Feedback = dynamic(() => import("@/components/Feedback"), { ssr: false });
 const Contact = dynamic(() => import("@/components/Contact"), { ssr: false });
-const SystemLogs = dynamic(() => import("@/components/SystemLogs"), { ssr: false });
 
 
 interface HeroSocial {
@@ -235,7 +234,6 @@ export default function Home() {
               <Feedback />
             </section>
             <Contact />
-            <SystemLogs />
           </motion.main>
         ) : null}
 
