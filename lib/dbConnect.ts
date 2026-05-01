@@ -1,4 +1,10 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
+
+// Node.js on some systems (WSL, certain Windows setups) defaults to 127.0.0.1 as DNS
+// which has nothing listening, causing SRV lookups for mongodb+srv:// to fail.
+// Force reliable public DNS resolvers before any connection attempt.
+dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
 
 interface MongooseCache {
   conn: typeof mongoose | null;

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 
-import { saveFileLocally } from '@/lib/fileStore';
+import { saveFile } from '@/lib/fileStore';
 
 export const runtime = 'nodejs';
 
@@ -59,10 +59,11 @@ export async function POST(request: NextRequest) {
     const fileName = `media-${Date.now()}-${randomUUID().slice(0, 8)}${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Save locally instead of GridFS
-    const url = await saveFileLocally(buffer, fileName);
+    // Save to GridFS (works on Vercel and any serverless environment)
+    const url = await saveFile(buffer, fileName, file.type);
+    const id = url.split('/').pop()!;
 
-    return NextResponse.json({ url, id: fileName });
+    return NextResponse.json({ url, id });
   } catch (error) {
     console.error('Upload error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown upload error';
